@@ -41,18 +41,26 @@ while running:
             bg.blit(grass,(x,y))
             if (x>(2*TILE_SIZE) and x<(WIDTH-TILE_SIZE)) and (y>(.5*TILE_SIZE) and y<(HEIGHT-TILE_SIZE)):
                 bg.blit(wood_floor,(x,y))
-            #bilt walls
+            #blit walls
             if (x>(2*TILE_SIZE) and x<(WIDTH-TILE_SIZE)) and (y==TILE_SIZE):
                 bg.blit(wallx,(x,y))
             elif (x>(2*TILE_SIZE) and x<(WIDTH-TILE_SIZE)) and (y==HEIGHT-TILE_SIZE):
                 bg.blit(wallx,(x,y))
-            elif (x>(2*TILE_SIZE) and x<(WIDTH-TILE_SIZE)) and (y==HEIGHT-(4*TILE_SIZE)):
-                bg.blit(wallx,(x,y))
-
+            #extreior Y walls
             if (x==(3*TILE_SIZE)) and (y>(.5*TILE_SIZE) and y<(HEIGHT-TILE_SIZE)) and (y!= 8*TILE_SIZE):
                 bg.blit(wally,(x,y))
             elif (x==(WIDTH-TILE_SIZE)) and (y>(.5*TILE_SIZE) and y<(HEIGHT-TILE_SIZE)):
+                bg.blit(wally,((x-15),y))
+            #interitor x walls
+            if (x>(2*TILE_SIZE) and x<(WIDTH-10*TILE_SIZE)) and (x!=WIDTH-12*TILE_SIZE) and (y==HEIGHT-(4*TILE_SIZE)):
+                bg.blit(wallx,(x,y))
+            elif (x>(2*TILE_SIZE) and x<(WIDTH-11*TILE_SIZE)) and (y==HEIGHT-(7*TILE_SIZE)):
+                bg.blit(wallx,(x,y))
+            #interior Y walls
+            if (x==(9*TILE_SIZE)) and (y>(.5*TILE_SIZE) and y<(HEIGHT-TILE_SIZE)):
                 bg.blit(wally,(x,y))
+                 
+
             
 
 
