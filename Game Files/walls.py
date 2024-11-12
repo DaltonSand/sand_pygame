@@ -18,6 +18,10 @@ class Background():
     def draw(self, screen):
         wallx= pygame.Surface((self.TILE_SIZE,15))
         wally= pygame.Surface((15,self.TILE_SIZE))
+        stair= pygame.Surface((25,113))
+        stair_b = pygame.Surface((5,113))
+        stair_b.fill((0,0,0))
+        stair.fill((113, 121, 126))
         wally.fill((60, 30, 10))
         wallx.fill((60, 30, 10))
         # Loop over X and Y to cover entire screen
@@ -62,6 +66,28 @@ class Background():
                     self.bg.blit(wally,(x,y))
                 if (x==(15*self.TILE_SIZE)) and (y>(2*self.TILE_SIZE) and y<(self.HEIGHT-6*self.TILE_SIZE)):
                     self.bg.blit(wally,(x,y))
+        #stairs
+        
+        self.bg.blit(stair,(719,79))
+        self.bg.blit(stair_b,(744,79))
+        self.bg.blit(stair,(749,79))
+        self.bg.blit(stair_b,(774,79))
+        self.bg.blit(stair,(779,79))
+        self.bg.blit(stair_b,(804,79))
+        self.bg.blit(stair,(809,79))
+        self.bg.blit(stair_b,(834,79))
+        self.bg.blit(stair,(839,79))
+        self.bg.blit(stair_b,(864,79))
+        self.bg.blit(stair,(869,79))
+
+
+
+
+
+
+
+
+
 
         # Draw boxes
         self.bg.blit(bigger_box,(300,463))

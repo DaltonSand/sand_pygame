@@ -26,7 +26,7 @@ box_scale = (box.get_width()*2,box.get_height()*2)
 bigger_box = pygame.transform.scale(box,box_scale)
 wood_floor = pygame.image.load('PNG/Tiles/tile_43.png')
 
-text = 0
+text = 601
 font = pygame.font.Font(None,42)
 
 
@@ -57,6 +57,10 @@ while running:
     pre_x = man.x
     pre_y = man.y
     man.check_keys()
+    if man.x <1 or man.x >WIDTH:
+        man.x = pre_x
+    if man.y <1 or man.y > HEIGHT:
+        man.y = pre_y
     for wall in bg.walls:
         if pygame.Rect.colliderect(man.rect, wall):
             man.x = pre_x
@@ -80,34 +84,34 @@ while running:
     badguy_4.draw(screen)
     badguy_5.draw(screen)
     badguy_6.draw(screen)
-    if man.x > 700 and man.y<200 and len(deadmen) == 6 and fail ==0:
+    if man.x > 700 and man.y<200 and man.x<900 and len(deadmen) == 6 and fail ==0:
         text_surface = font.render("VICTORY", True, (0,0,0))
     elif man.alive == 1:
         text_surface = font.render("FAIL", True, (0,0,0))
         fail = 1
-    elif text <50:
+    elif text <600:
         text_surface = font.render("", True, (0,0,0))
-    elif text > 50 and text <52:
+    elif text > 600 and text <660:
         text_surface = font.render("10", True, (0,0,0))
-    elif text > 52 and text <54:
+    elif text > 660 and text <720:
         text_surface = font.render("9", True, (0,0,0))
-    elif text > 54 and text <56:
+    elif text > 720 and text <780:
         text_surface = font.render("8", True, (0,0,0))
-    elif text > 56 and text <58:
+    elif text > 780 and text <840:
         text_surface = font.render("7", True, (0,0,0))
-    elif text > 58 and text <60:
+    elif text > 840 and text <900:
         text_surface = font.render("6", True, (0,0,0))
-    elif text > 60 and text <62:
+    elif text > 900 and text <960:
         text_surface = font.render("5", True, (0,0,0))
-    elif text > 62 and text <64:
+    elif text > 960 and text <1020:
         text_surface = font.render("4", True, (0,0,0))
-    elif text > 64 and text <66:
+    elif text > 1020 and text <1080:
         text_surface = font.render("3", True, (0,0,0))
-    elif text > 66 and text <68:
+    elif text > 1080 and text <1140:
         text_surface = font.render("2", True, (0,0,0))
-    elif text > 68 and text <70:
+    elif text > 1140 and text <1200:
         text_surface = font.render("1", True, (0,0,0))
-    elif text >70:
+    elif text >1200:
         text_surface = font.render("FAIL", True, (0,0,0))
         fail = 1
     text_rect = text_surface.get_rect(center=(652,30))
@@ -157,21 +161,28 @@ while running:
                 break
         if pygame.Rect.colliderect(shot.rect,badguy_1.rect):
             badguy_1.die(deadmen)
+            text -= 200
             break
         if pygame.Rect.colliderect(shot.rect,badguy_2.rect):
             badguy_2.die(deadmen)
+            text -= 200
+
             break
         if pygame.Rect.colliderect(shot.rect,badguy_3.rect):
             badguy_3.die(deadmen)
+            text -= 200
             break
         if pygame.Rect.colliderect(shot.rect,badguy_4.rect):
             badguy_4.die(deadmen)
+            text -= 200
             break
         if pygame.Rect.colliderect(shot.rect,badguy_5.rect):
             badguy_5.die(deadmen)
+            text -= 200
             break
         if pygame.Rect.colliderect(shot.rect,badguy_6.rect):
             badguy_6.die(deadmen)
+            text -= 200
             break
         if shot.x > WIDTH or shot.x <0 or shot.y <0 or shot.y > HEIGHT:
             break
@@ -203,7 +214,7 @@ while running:
         man.draw(screen)
     else:
         man.reload(screen)
-    text += 0.025
+    text += 1
     pygame.display.flip()
     clock.tick(60)
 pygame.quit()
