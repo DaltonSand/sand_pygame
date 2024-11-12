@@ -15,7 +15,7 @@ running = True
 bullets = []
 shot_num = 0 
 reload_num = 100
-shot_max =8
+shot_max =7
 deadmen = []
 fail = 0
 
@@ -25,6 +25,7 @@ box = pygame.image.load('PNG/crateMetal.png')
 box_scale = (box.get_width()*2,box.get_height()*2)
 bigger_box = pygame.transform.scale(box,box_scale)
 wood_floor = pygame.image.load('PNG/Tiles/tile_43.png')
+bullet = pygame.image.load('PNG/bullet.png')
 
 # Text - time, font
 text = 541
@@ -126,7 +127,13 @@ while running:
     else:
         text_surface_reload = font.render("OUT OF BULLETS", True, (0,0,0))
     text_rect_reload = text_surface_reload.get_rect(center =(125,30))
-    
+    # Draw Num Bullets left
+    bullet_r = pygame.transform.rotozoom(bullet,0,0.02)
+    bullet_num = shot_max-shot_num
+    for x in range(15,15*bullet_num+15,15):
+        screen.blit(bullet_r, (x,100))
+
+
 
     reload_num +=1
     reload(man,reload_num,shot_num,shot_max,screen)
