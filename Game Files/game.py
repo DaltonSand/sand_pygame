@@ -28,7 +28,7 @@ wood_floor = pygame.image.load('PNG/Tiles/tile_43.png')
 bullet = pygame.image.load('PNG/bullet.png')
 
 # Text - time, font
-text = 541
+text = 480
 font = pygame.font.Font(None,42)
 
 
@@ -131,7 +131,7 @@ while running:
     bullet_r = pygame.transform.rotozoom(bullet,0,0.02)
     bullet_num = shot_max-shot_num
     for x in range(15,15*bullet_num+15,15):
-        screen.blit(bullet_r, (x,100))
+        screen.blit(bullet_r, (x,75))
 
 
 

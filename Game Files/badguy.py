@@ -13,6 +13,7 @@ class BadGuy():
         self.angle = 0
         self.time = 0
         self.dead = 0
+        self.roving = 0
         
         self.image = pygame.image.load('PNG/Soldier 1/soldier1_machine.png')
         self.w = self.image.get_width()
@@ -26,33 +27,37 @@ class BadGuy():
         self.max_y = max_y
         self.the_x = -100
         self.the_y = -100
-        if self.dead ==0:
-            if self.time < (self.max_x-self.cx):
-                self.x += speed
-                self.angle = 0
-                self.the_x = (self.rect.centerx)
-                self.the_y = (self.rect.centery-50)
+        if self.roving == 0:
+            if self.dead ==0:
+                if self.time < (self.max_x-self.cx):
+                    self.x += speed
+                    self.angle = 0
+                    self.the_x = (self.rect.centerx)
+                    self.the_y = (self.rect.centery-50)
 
-            elif self.time < ((self.max_x-self.cx)+(self.max_y-self.cy)):
-                self.y += speed
-                self.angle = 270
-                self.the_x = (self.rect.centerx-50)
-                self.the_y = (self.rect.centery)
-            elif self.time < ((self.max_x-self.cx)+(self.max_y-self.cy))+ (self.max_x-self.cx):
-                self.x -= speed
-                self.angle = 180
-                self.the_x = (self.rect.centerx-100)
-                self.the_y = (self.rect.centery-50)
-            elif self.time < (((self.max_x-self.cx)+(self.max_y-self.cy))+ (self.max_x-self.cx))+(self.max_y-self.cy):
-                self.y -= speed
-                self.angle = 90
-                self.the_x = (self.rect.centerx-50)
-                self.the_y = (self.rect.centery-100)
+                elif self.time < ((self.max_x-self.cx)+(self.max_y-self.cy)):
+                    self.y += speed
+                    self.angle = 270
+                    self.the_x = (self.rect.centerx-50)
+                    self.the_y = (self.rect.centery)
+                elif self.time < ((self.max_x-self.cx)+(self.max_y-self.cy))+ (self.max_x-self.cx):
+                    self.x -= speed
+                    self.angle = 180
+                    self.the_x = (self.rect.centerx-100)
+                    self.the_y = (self.rect.centery-50)
+                elif self.time < (((self.max_x-self.cx)+(self.max_y-self.cy))+ (self.max_x-self.cx))+(self.max_y-self.cy):
+                    self.y -= speed
+                    self.angle = 90
+                    self.the_x = (self.rect.centerx-50)
+                    self.the_y = (self.rect.centery-100)
+                else:
+                    self.time = 0
+                self.rect = pygame.Rect(self.x,self.y,(self.w),(self.h)) 
             else:
-                self.time = 0
-            self.rect = pygame.Rect(self.x,self.y,(self.w),(self.h)) 
+                self.rect = pygame.Rect(-50,-50,(self.w),(self.h))
         else:
-            self.rect = pygame.Rect(-50,-50,(self.w),(self.h))
+            self.rect = pygame.Rect(self.x,self.y,(self.w),(self.h))
+
 
 
         self.vision = pygame.Surface((100,100))
@@ -68,7 +73,7 @@ class BadGuy():
         self.dead = 1
         deadmen.append(self.x)
     def shoot(self,bg,man,man_x, man_y,screen, badguy_1, badguy_2, badguy_3,badguy_4,badguy_5,badguy_6):
-        self.dead =1
+        self.roving =1
         gun = Gun()
         man_x_relative = man_x-self.x
         man_y_relative = man_y-self.y
