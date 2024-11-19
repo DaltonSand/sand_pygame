@@ -22,12 +22,6 @@ class Gun():
         self.rect = pygame.Rect(self.x,self.y,10,10)
 
 
-        '''self.x += (2*cos(angle))
-        self.y += (2*sin(angle))
-        screen.blit(self.surface, (x,y))
-        self.rect = pygame.Rect(self.x,self.y,(25),(25))
-        '''
-
 class Reload():
     def __init__ (self, x,y, screen):
         self.x = x

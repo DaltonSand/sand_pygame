@@ -1,6 +1,6 @@
 import pygame
 from gun import Gun
-from math import atan, pi
+from math import atan2, pi, degrees
 clock = pygame.time.Clock()
 
 flag = 0
@@ -77,7 +77,8 @@ class BadGuy():
         gun = Gun()
         man_x_relative = man_x-self.x
         man_y_relative = man_y-self.y
-        if self.angle == 0:
+        self.angle = degrees(atan2(-man_y_relative,man_x_relative))
+        '''if self.angle == 0:
             man_angle = atan((man_y_relative/man_x_relative))
             self.angle = -man_angle*180/pi
         if self.angle == 90:
@@ -88,7 +89,7 @@ class BadGuy():
             self.angle = -man_angle*180/pi+180
         if self.angle == 270:
             man_angle = atan((man_x_relative/man_y_relative))
-            self.angle = man_angle*180/pi+270
+            self.angle = man_angle*180/pi+270'''
         flag = 1
         gun.shoot(self.x+15,self.y+15,self.angle,screen)
         while flag ==1 :

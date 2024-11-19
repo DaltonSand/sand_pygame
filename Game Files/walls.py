@@ -42,7 +42,7 @@ class Background():
                     self.bg.blit(wallx,(x,y))
                     
                 # Exterior Y walls
-                if (x==(3*self.TILE_SIZE)) and (y>(.5*self.TILE_SIZE) and y<(self.HEIGHT-self.TILE_SIZE)) and (y!= 7*self.TILE_SIZE):
+                if (x==(3*self.TILE_SIZE)) and (y>(.5*self.TILE_SIZE) and y<(self.HEIGHT-self.TILE_SIZE)) and (y!=8*self.TILE_SIZE):
                     self.bg.blit(wally,(x,y))
                 elif (x==(self.WIDTH-self.TILE_SIZE)) and (y>(.5*self.TILE_SIZE) and y<(self.HEIGHT-self.TILE_SIZE)):
                     self.bg.blit(wally,((x-15),y))
@@ -80,23 +80,14 @@ class Background():
         self.bg.blit(stair_b,(864,79))
         self.bg.blit(stair,(869,79))
 
-
-
-
-
-
-
-
-
-
         # Draw boxes
         self.bg.blit(bigger_box,(300,463))
         self.bg.blit(bigger_box,(400,584))
         self.bg.blit(bigger_box,(300,325))
         self.bg.blit(bigger_box,(800,500))
-
         
         screen.blit(self.bg,(0,0))
+        return self.bg
        
 
     # Wall collision rectangles
@@ -111,7 +102,7 @@ class Background():
                     self.walls.append(pygame.Rect(x, y, self.TILE_SIZE, 15))
                     
                 # Exterior Y walls
-                if (x==(3*self.TILE_SIZE)) and (y>(.5*self.TILE_SIZE) and y<(self.HEIGHT-self.TILE_SIZE)) and (y!= 7*self.TILE_SIZE):
+                if (x==(3*self.TILE_SIZE)) and (y>(.5*self.TILE_SIZE) and y<(self.HEIGHT-self.TILE_SIZE)) and (y!=8*self.TILE_SIZE):
                     self.walls.append(pygame.Rect(x, y, 15, self.TILE_SIZE))
                 elif (x==(self.WIDTH-self.TILE_SIZE)) and (y>(.5*self.TILE_SIZE) and y<(self.HEIGHT-self.TILE_SIZE)):
                     self.walls.append(pygame.Rect(x-15, y, 15, self.TILE_SIZE))
