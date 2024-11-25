@@ -13,6 +13,8 @@ HEIGHT = 704
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 clock = pygame.time.Clock()
 running = True
+
+# variable set up
 bullets = []
 shot_num = 0 
 reload_num = 100
@@ -35,7 +37,7 @@ wood_floor = pygame.image.load('PNG/Tiles/tile_43.png')
 bullet = pygame.image.load('PNG/bullet.png')
 
 # Text - time, font
-text = 200
+game_time = 15.1
 font = pygame.font.Font(None,42)
 
 # THE MAN
@@ -44,11 +46,13 @@ man = Man(75,350)
 # Sizes
 TILE_SIZE = grass.get_width()
 
+#create bad guys for each level
 if level == 1:
     # Create initial background and wall collisions
     bg = Background(WIDTH, HEIGHT,TILE_SIZE)
     bg.draw(screen)
     bg.create_wall_collisions()
+
     #badguys
     badguy_1 = BadGuy(375,290)
     badguy_2 = BadGuy(250,540)
@@ -56,21 +60,26 @@ if level == 1:
     badguy_4 = BadGuy(250,125)
     badguy_5 = BadGuy(740,250)
     badguy_6 = BadGuy(730,450)
-if level == 2:
+elif level == 2:
+    #create level 2 background & collisons
     bg = Background_2 (WIDTH,HEIGHT,TILE_SIZE)
     bg.draw(screen)
 
+#MUSIC
+bg_music = pygame.mixer.Sound('VTEMO - Drifting (freetouse.com).mp3')
+bg_music.set_volume(0.5)
+bg_music.play(-1)
 
 # Run game loop
 while running:
+    # Run until 'X' is pressed
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
 
-    if level == 2:
-        walls = []
-        bg = Background_2 (WIDTH,HEIGHT,TILE_SIZE)
-        bg.draw(screen)
+    #initilize keys
+    keys = pygame.key.get_pressed()
+
     #COLLISONS - walls/screen
     pre_x = man.x
     pre_y = man.y
@@ -86,11 +95,12 @@ while running:
 
     #DRAW EVERYTHING
     screen.fill(color)
+    #LEVEL 1
     if level == 1:
+        #draw background
         bg.draw(screen)
-
         # Draw Title
-        if title_time < 180:
+        if title_time < 120:
             title_surface = font.render("Killing Osama bin Laden: Level 1", True, (255,255,255))
             bg_alpha += 1
             title_alpha -= 4
@@ -119,38 +129,51 @@ while running:
 
         # Draw time/win status
         if fail == 0:
-            if man.x > 700 and man.y<200 and man.x<900 and len(deadmen) == 6 and fail ==0:
+            if man.x > 700 and man.y<200 and man.x<830 and len(deadmen) == 6 and fail ==0:
                 text_surface = font.render("VICTORY", True, (0,0,0))
                 level = 2
-                #color = (80, 200, 120)
-                #bg_alpha =120
-                #bg.bg.set_alpha(bg_alpha)
             elif man.alive == 1:
                 text_surface = font.render("", True, (0,0,0))
                 fail = 1
-            elif text <600:
-                text_surface = font.render("", True, (0,0,0))
-            elif text > 600 and text <660:
+            elif game_time > 19:
+                text_surface = font.render("19", True, (0,0,0))
+            elif game_time > 18 and game_time <19:
+                text_surface = font.render("18", True, (0,0,0))
+            elif game_time > 17 and game_time <18:
+                text_surface = font.render("17", True, (0,0,0))
+            elif game_time > 16 and game_time <17:
+                text_surface = font.render("16", True, (0,0,0))
+            elif game_time > 15 and game_time <16:
+                text_surface = font.render("15", True, (0,0,0))
+            elif game_time > 14 and game_time <15:
+                text_surface = font.render("14", True, (0,0,0))
+            elif game_time > 13 and game_time <14:
+                text_surface = font.render("13", True, (0,0,0))
+            elif game_time > 12 and game_time <13:
+                text_surface = font.render("12", True, (0,0,0))
+            elif game_time > 11 and game_time <12:
+                text_surface = font.render("11", True, (0,0,0))
+            elif game_time > 10 and game_time <11:
                 text_surface = font.render("10", True, (0,0,0))
-            elif text > 660 and text <720:
+            elif game_time > 9 and game_time <10:
                 text_surface = font.render("9", True, (0,0,0))
-            elif text > 720 and text <780:
+            elif game_time > 8 and game_time <9:
                 text_surface = font.render("8", True, (0,0,0))
-            elif text > 780 and text <840:
+            elif game_time > 7 and game_time <8:
                 text_surface = font.render("7", True, (0,0,0))
-            elif text > 840 and text <900:
+            elif game_time > 6 and game_time <7:
                 text_surface = font.render("6", True, (0,0,0))
-            elif text > 900 and text <960:
+            elif game_time > 5 and game_time <6:
                 text_surface = font.render("5", True, (0,0,0))
-            elif text > 960 and text <1020:
+            elif game_time > 4 and game_time <5:
                 text_surface = font.render("4", True, (0,0,0))
-            elif text > 1020 and text <1080:
+            elif game_time > 3 and game_time <4:
                 text_surface = font.render("3", True, (0,0,0))
-            elif text > 1080 and text <1140:
+            elif game_time > 2 and game_time <3:
                 text_surface = font.render("2", True, (0,0,0))
-            elif text > 1140 and text <1200:
+            elif game_time > 1 and game_time <2:
                 text_surface = font.render("1", True, (0,0,0))
-            elif text >1200:
+            elif game_time <1:
                 text_surface = font.render("", True, (0,0,0))
                 fail = 1
             text_rect = text_surface.get_rect(center=(652,30))
@@ -160,6 +183,7 @@ while running:
             color = (138, 3, 3)
             bg_alpha =120
             bg.bg.set_alpha(bg_alpha)
+            man.die()
 
         # MAN RELOAD - TEXT
         if man.reloading == True and shot_num < shot_max:
@@ -169,17 +193,17 @@ while running:
         else:
             text_surface_reload = font.render("OUT OF BULLETS", True, (0,0,0))
         text_rect_reload = text_surface_reload.get_rect(center =(125,30))
+
         # Draw Num Bullets left
         bullet_r = pygame.transform.rotozoom(bullet,0,0.02)
         bullet_num = shot_max-shot_num
         for x in range(15,15*bullet_num+15,15):
             screen.blit(bullet_r, (x,75))
 
+        # reload bar
         reload_num +=1
         reload(man,reload_num,shot_num,shot_max,screen)
 
-        # Initilize Keys
-        keys = pygame.key.get_pressed()
 
         # Check for Shoot (space)
         flag_1 = False
@@ -191,6 +215,7 @@ while running:
             reload_num =0
             flag_1 = True
 
+        #bypass level 1
         if keys[pygame.K_p]:
             level = 2
 
@@ -217,27 +242,27 @@ while running:
             # Check to see if bullet hit a bad guy
             if pygame.Rect.colliderect(shot.rect,badguy_1.rect):
                 badguy_1.die(deadmen)
-                text -= 200
+                game_time += 3
                 break
             if pygame.Rect.colliderect(shot.rect,badguy_2.rect):
                 badguy_2.die(deadmen)
-                text -= 200
+                game_time += 3
                 break
             if pygame.Rect.colliderect(shot.rect,badguy_3.rect):
                 badguy_3.die(deadmen)
-                text -= 200
+                game_time += 3
                 break
             if pygame.Rect.colliderect(shot.rect,badguy_4.rect):
                 badguy_4.die(deadmen)
-                text -= 200
+                game_time += 3
                 break
             if pygame.Rect.colliderect(shot.rect,badguy_5.rect):
                 badguy_5.die(deadmen)
-                text -= 200
+                game_time += 3
                 break
             if pygame.Rect.colliderect(shot.rect,badguy_6.rect):
                 badguy_6.die(deadmen)
-                text -= 200
+                game_time += 3
                 break
             if shot.x > WIDTH or shot.x <0 or shot.y <0 or shot.y > HEIGHT:
                 break
@@ -270,16 +295,27 @@ while running:
         screen.blit(text_surface_reload,text_rect_reload)
 
         # Increase Time for text
-        text += 1
+        game_time -= 1/60
         # Increase Time fot title
         title_time += 1
-    if level == 2:
+    #LEVEL 2
+    elif level == 2:
+        #start new walls for collisions
+        walls = []
+        #draw everything
+        bg = Background_2 (WIDTH,HEIGHT,TILE_SIZE)
         bg.draw(screen)
+        #bypass back to level 1
+        if keys[pygame.K_i]:
+            level = 1
+
     # Blit man image
     if reload_num >100 or shot_num >shot_max:
         man.draw(screen)
     else:
+        # blit man reloading
         man.reload(screen)
+        
     pygame.display.flip()
     clock.tick(60)
 pygame.quit()

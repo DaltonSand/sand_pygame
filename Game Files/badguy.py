@@ -5,22 +5,30 @@ clock = pygame.time.Clock()
 
 flag = 0
 class BadGuy():
-    def __init__ (self,x,y):
+    #initilize bad guy 
+    def __init__ (self,x,y,level=1):
         self.x = x
         self.cx = x
         self.y = y
         self.cy = y
+        #set level for more intense looking bad guy
+        self.level = level
+        #set basic atributes
         self.angle = 0
         self.time = 0
         self.dead = 0
         self.roving = 0
-        
-        self.image = pygame.image.load('PNG/Soldier 1/soldier1_machine.png')
+        #higher level = cooler skin (set image/rect)
+        if self.level == 1:
+            self.image = pygame.image.load('PNG/Soldier 1/soldier1_machine.png')
+        elif self.level == 2:
+            self.image = pygame.image.load('PNG/Robot 1/robot1_gun.png')
         self.w = self.image.get_width()
         self.h = self.image.get_height()
         self.rect = pygame.Rect(self.x,self.y,(self.w),(self.h))
 
     def rove(self, max_x,max_y):
+        #set a time variable to control movement
         self.time += 1
         speed = 0.8
         self.max_x = max_x
@@ -64,7 +72,14 @@ class BadGuy():
         self.vision.fill((0,0,0))
         self.vison_rect = pygame.Rect(self.the_x,self.the_y,(100),(100))
 
-
+    def rove_rev (self, min_x, min_y):
+        #set a time variable to control movement
+        self.time += 1
+        speed = 0.8
+        self.min_x = min_x
+        self.min_y = min_y
+        self.the_x = -100
+        self.the_y = -100
     
     def die(self,deadmen):
         self.image = pygame.image.load('PNG/Man Old/manOld_stand.png')
@@ -78,18 +93,6 @@ class BadGuy():
         man_x_relative = man_x-self.x
         man_y_relative = man_y-self.y
         self.angle = degrees(atan2(-man_y_relative,man_x_relative))
-        '''if self.angle == 0:
-            man_angle = atan((man_y_relative/man_x_relative))
-            self.angle = -man_angle*180/pi
-        if self.angle == 90:
-            man_angle = atan((man_x_relative/man_y_relative))
-            self.angle = man_angle*180/pi+90
-        if self.angle == 180:
-            man_angle = atan((man_y_relative/man_x_relative))
-            self.angle = -man_angle*180/pi+180
-        if self.angle == 270:
-            man_angle = atan((man_x_relative/man_y_relative))
-            self.angle = man_angle*180/pi+270'''
         flag = 1
         gun.shoot(self.x+15,self.y+15,self.angle,screen)
         while flag ==1 :

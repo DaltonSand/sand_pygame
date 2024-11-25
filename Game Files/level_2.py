@@ -27,12 +27,12 @@ TILE_SIZE = grass.get_width()
 bg = Background_2(WIDTH, HEIGHT,TILE_SIZE)
 bg.draw(screen)
 #badguys
-badguy_1 = BadGuy(275,125)
-badguy_2 = BadGuy(225,140)
-badguy_3 = BadGuy(635,125)
-#badguy_4 = BadGuy(250,125)
-badguy_5 = BadGuy(740,250)
-badguy_6 = BadGuy(730,450)
+badguy_1 = BadGuy(275,125,2)
+badguy_2 = BadGuy(225,140,2)
+badguy_3 = BadGuy(635,125,2)
+#badguy_4 = BadGuy(250,125,2)
+badguy_5 = BadGuy(740,250,2)
+badguy_6 = BadGuy(730,450,2)
 # Run game loop
 while running:
     for event in pygame.event.get():
