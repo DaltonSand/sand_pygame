@@ -11,6 +11,9 @@ class BadGuy():
         self.cx = x
         self.y = y
         self.cy = y
+        #set time for rove_rev
+        self.time_x = x
+        self.time_y = y
         #set level for more intense looking bad guy
         self.level = level
         #set basic atributes
@@ -72,14 +75,42 @@ class BadGuy():
         self.vision.fill((0,0,0))
         self.vison_rect = pygame.Rect(self.the_x,self.the_y,(100),(100))
 
-    def rove_rev (self, min_x, min_y):
+    def rove_rev (self, min_x,max_y):
         #set a time variable to control movement
-        self.time += 1
+        self.time_x += 1
+        self.time_y += 1
         speed = 0.8
         self.min_x = min_x
-        self.min_y = min_y
+        self.max_y = max_y
         self.the_x = -100
         self.the_y = -100
+        if self.time_x < (self.min_x+self.cx):
+            self.x -= speed
+            self.angle = 180
+            self.the_x = (self.rect.centerx-100)
+            self.the_y = (self.rect.centery-50)
+            self.time_y = 0
+        elif self.time_y < (self.max_y-self.cy):
+            self.y += speed
+            self.angle = 270
+            self.the_x = (self.rect.centerx-50)
+            self.the_y = (self.rect.centery)
+            self.time_x = 1000+self.cx
+        elif self.time_x <(self.cx +self.min_x+1000):
+            self.x += speed
+            self.angle = 0
+            self.the_x = (self.rect.centerx)
+            self.the_y = (self.rect.centery-50)
+            self.time_y = self.cy+1000
+        elif self.time_y < self.max_y+1000:
+            self.y -= speed
+            self.angle = 90
+            self.the_x = (self.rect.centerx-50)
+            self.the_y = (self.rect.centery-100)
+        else:
+            self.time_x = self.cx
+
+              
     
     def die(self,deadmen):
         self.image = pygame.image.load('PNG/Man Old/manOld_stand.png')

@@ -27,7 +27,7 @@ TILE_SIZE = grass.get_width()
 bg = Background_2(WIDTH, HEIGHT,TILE_SIZE)
 bg.draw(screen)
 #badguys
-badguy_1 = BadGuy(275,125,2)
+badguy_1 = BadGuy(340,125,2)
 badguy_2 = BadGuy(225,140,2)
 badguy_3 = BadGuy(635,125,2)
 #badguy_4 = BadGuy(250,125,2)
@@ -53,7 +53,7 @@ while running:
             man.y = pre_y
 
     # Badguys move around/blit 
-    badguy_1.rove(300,300)
+    badguy_1.rove_rev(140,300)
     badguy_2.rove(350,280)
     badguy_3.rove(640,700)
     #badguy_4.rove(350,200)
