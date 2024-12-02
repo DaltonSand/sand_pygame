@@ -1,6 +1,6 @@
 #LEVEL 2
 import pygame
-from walls2 import Background_2
+from walls3 import Background_3
 from man import Man
 from gun import Gun, Reload, reload
 from badguy import BadGuy
@@ -24,15 +24,17 @@ man = Man(750,120)
 TILE_SIZE = grass.get_width()
 
 
-bg = Background_2(WIDTH, HEIGHT,TILE_SIZE)
+bg = Background_3(WIDTH, HEIGHT,TILE_SIZE)
 bg.draw(screen)
 #badguys
-badguy_1 = BadGuy(340,125,2)
-badguy_2 = BadGuy(225,140,2)
-badguy_3 = BadGuy(635,125,2)
-#badguy_4 = BadGuy(250,125,2)
-badguy_5 = BadGuy(740,250,2)
-badguy_6 = BadGuy(730,450,2)
+badguy_7 = BadGuy(340,120,2)
+badguy_8 = BadGuy(225,85,2)
+badguy_9 = BadGuy(635,125,2)
+badguy_10 = BadGuy(450,200,2)
+badguy_11= BadGuy(950,150,2)
+badguy_12= BadGuy(730,480,2)
+badguy_13= BadGuy(1050,350,2)
+badguy_14= BadGuy(250,350,2)
 # Run game loop
 while running:
     for event in pygame.event.get():
@@ -53,18 +55,22 @@ while running:
             man.y = pre_y
 
     # Badguys move around/blit 
-    badguy_1.rove_rev(140,300)
-    badguy_2.rove(350,280)
-    badguy_3.rove(640,700)
-    #badguy_4.rove(350,200)
-    badguy_5.rove(870,280)
-    badguy_6.rove(950,600)
-    badguy_1.draw(screen)
-    badguy_2.draw(screen)
-    badguy_3.draw(screen)
-    #badguy_4.draw(screen)
-    badguy_5.draw(screen)
-    badguy_6.draw(screen)
+    badguy_7.rove_rev(85,230)
+    badguy_8.rove(310,190)
+    badguy_9.rove(640,450)
+    badguy_10.rove(580,320)
+    badguy_11.rove(1040,220)
+    badguy_12.rove(970,560)
+    badguy_13.rove_rev(600,380)
+    badguy_14.rove(800,380)
+    badguy_7.draw(screen)
+    badguy_8.draw(screen)
+    badguy_9.draw(screen)
+    badguy_10.draw(screen)
+    badguy_11.draw(screen)
+    badguy_12.draw(screen)
+    badguy_13.draw(screen)
+    badguy_14.draw(screen)
 
     man.draw(screen)
     pygame.display.flip()

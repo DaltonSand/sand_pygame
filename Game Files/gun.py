@@ -46,31 +46,33 @@ class Reload():
         self.screen.blit(self.right_line, (140,50))
         self.screen.blit(self.left_line, (20,50))
 
-def reload(man,reload_num,shot_num,shot_max,screen):
+def reload(man,reload_num,shot_num,shot_max,screen,time):
     if shot_num <shot_max:
         reload_0 = Reload(20,30,screen)
         reload_0.box()
-        if reload_num <100:
+        if reload_num <10:
             man.reload(screen)
-        if reload_num >16:
+        if reload_num >time/6:
             reload_1 = Reload(20,50,screen)
             reload_1.fill()
-        if reload_num >33:
+        if reload_num >2*time/6:
             reload_2 = Reload(40,50,screen)
             reload_2.fill()
-        if reload_num >47:
+        if reload_num >3*time/6:
             reload_3 = Reload(60,50,screen)
             reload_3.fill()
-        if reload_num >66:
+        if reload_num >4*time/6:
             reload_4 = Reload(80,50,screen)
             reload_4.fill()
-        if reload_num >84:
+        if reload_num >5*time/6:
             reload_5 = Reload(100,50,screen)
             reload_5.fill()
-        if reload_num >100:
+        if reload_num >time:
             reload_6 = Reload(120,50,screen)
             reload_6.fill()
             man.reloading = False
+            
+            
             
 
 

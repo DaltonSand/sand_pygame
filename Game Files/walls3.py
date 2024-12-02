@@ -7,7 +7,7 @@ box_scale = (box.get_width()*2,box.get_height()*2)
 bigger_box = pygame.transform.scale(box,box_scale)
 
 
-class Background_2():
+class Background_3():
     def __init__ (self, WIDTH, HEIGHT, TILE_SIZE):
         self.WIDTH = WIDTH
         self.HEIGHT = HEIGHT
@@ -57,58 +57,14 @@ class Background_2():
                 elif (x==(self.WIDTH-self.TILE_SIZE)) and (y>(.5*self.TILE_SIZE) and y<(self.HEIGHT-1.5*self.TILE_SIZE)):
                     self.bg.blit(wally,((x-15),y))
                     self.walls.append(pygame.Rect(x, y, 15, self.TILE_SIZE))
-                
-                # Interior X walls
-                if (x>(2*self.TILE_SIZE) and (x!=9*self.TILE_SIZE)) and x<(18*self.TILE_SIZE) and (x!=10*self.TILE_SIZE) and (x!=7*self.TILE_SIZE) and (x!=14*self.TILE_SIZE) and (y==self.HEIGHT-(4*self.TILE_SIZE)):
+
+                # Interior X
+                if (x>(2*self.TILE_SIZE) and x<(18*self.TILE_SIZE) and (x!=7*self.TILE_SIZE) and (x!=14*self.TILE_SIZE) and (y==self.HEIGHT-(4*self.TILE_SIZE))):
                     self.bg.blit(wallx,(x,y))
                     self.walls.append(pygame.Rect(x, y, self.TILE_SIZE, 15))
-
-                if (x>(10*self.TILE_SIZE) and x<(14*self.TILE_SIZE)) and(y==self.HEIGHT-(8*self.TILE_SIZE)):
-                    self.bg.blit(wallx,(x,y))
-                    self.walls.append(pygame.Rect(x, y, self.TILE_SIZE, 15))
-
-                if (x>(2*self.TILE_SIZE) and x<(18*self.TILE_SIZE))and (x!=7*self.TILE_SIZE)and(x!=10*self.TILE_SIZE) and (x!=9*self.TILE_SIZE)and (x!=16*self.TILE_SIZE)and(y==self.HEIGHT-(6*self.TILE_SIZE)):
-                    self.bg.blit(wallx,(x,y))
-                    self.walls.append(pygame.Rect(x, y, self.TILE_SIZE, 15))
-
-                    
-                # Interior Y walls
-                if (x==(9*self.TILE_SIZE)) and (y!=5*self.TILE_SIZE) and (y!=9*self.TILE_SIZE)and (y!=3*self.TILE_SIZE)and(y!=6*self.TILE_SIZE) and (y>(.5*self.TILE_SIZE) and y<(self.HEIGHT-self.TILE_SIZE)):
-                    self.bg.blit(wally,(x,y))
-                    self.walls.append(pygame.Rect(x, y, 15, self.TILE_SIZE))
-
-                if (x==(6*self.TILE_SIZE)) and (y>(.5*self.TILE_SIZE) and y<(self.HEIGHT-7*self.TILE_SIZE)):
-                    self.bg.blit(wally,(x,y))
-                    self.walls.append(pygame.Rect(x, y, 15, self.TILE_SIZE))
-
-                if (x==(11*self.TILE_SIZE)) and (y>(2*self.TILE_SIZE) and y<(self.HEIGHT-self.TILE_SIZE)) and (y!=5*self.TILE_SIZE)and (y!=6*self.TILE_SIZE) and (y!=9*self.TILE_SIZE):
-                    self.bg.blit(wally,(x,y))
-                    self.walls.append(pygame.Rect(x, y, 15, self.TILE_SIZE))
-
-                if (x==(14*self.TILE_SIZE)) and (y>(.5*self.TILE_SIZE) and y<(self.HEIGHT-8*self.TILE_SIZE)):
-                    self.bg.blit(wally,(x,y))
-                    self.walls.append(pygame.Rect(x, y, 15, self.TILE_SIZE))
-
-        #corners
-        self.bg.blit(wall_corner,(9*self.TILE_SIZE,5*self.TILE_SIZE))
-        self.bg.blit(wall_corner,(14*self.TILE_SIZE,3*self.TILE_SIZE))
-
 
         #stairs
         
-        self.bg.blit(stair,(719,79))
-        self.bg.blit(stair_b,(744,79))
-        self.bg.blit(stair,(749,79))
-        self.bg.blit(stair_b,(774,79))
-        self.bg.blit(stair,(779,79))
-        self.bg.blit(stair_b,(804,79))
-        self.bg.blit(stair,(809,79))
-        self.bg.blit(stair_b,(834,79))
-        self.bg.blit(stair,(839,79))
-        self.bg.blit(stair_b,(864,79))
-        self.bg.blit(stair,(869,79))
-        
-
         self.bg.blit(stairl,(207,463))
         self.bg.blit(stair_bl,(232,463))
         self.bg.blit(stairl,(237,463))
@@ -120,7 +76,7 @@ class Background_2():
         self.bg.blit(stairl,(327,463))
         self.bg.blit(stair_bl,(352,463))
         self.bg.blit(stairl,(357,463))
-
+        
         screen.blit(self.bg,(0,0))
         return self.bg
 
