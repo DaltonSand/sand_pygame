@@ -180,9 +180,7 @@ while running:
         title_surface.set_alpha(title_alpha)
         title_rect = title_surface.get_rect(center=(WIDTH//2,HEIGHT//2))
         screen.blit(title_surface,title_rect)
-
-        ## TESTING COMMIT
-
+        
         for wall in bg.walls:
             if pygame.Rect.colliderect(man.rect, wall):
                 man.x = pre_x
