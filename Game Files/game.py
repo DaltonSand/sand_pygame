@@ -206,15 +206,20 @@ while running:
 
         # Check if Man Spotted (kill him)
         for dude in badguys:
-            if pygame.Rect.colliderect(man.rect,dude.vision_rect):
-                print('\n\n\n SPOTED \n\n\n')
-                dude.shot_flag = 1
-                dude.shoot(bg,man,man.x,man.y,screen,badguys)
-            if dude.shot_flag != 0 and man.alive ==0 and (dude.double_tap_timer ==45 or dude.double_tap_timer == 90 or dude.double_tap_timer ==135 or dude.double_tap_timer ==180 or dude.double_tap_timer ==225):
-                dude.shoot(bg,man,man.x,man.y,screen,badguys)
-                print('double tap')
-            if dude.shot_flag ==1:
-                print(dude.double_tap_timer)          
+            if dude.dead != 0:
+                if pygame.Rect.colliderect(man.rect,dude.vision_rect):
+                    print('\n\n\n SPOTED \n\n\n')
+            
+                    dude.shot_flag = 1
+                    dude.shoot(bg,man,man.x,man.y,screen,badguys)
+                if dude.shot_flag != 0 and man.alive ==0 and (dude.double_tap_timer ==45 or dude.double_tap_timer == 90 or dude.double_tap_timer ==135 or dude.double_tap_timer ==180 or dude.double_tap_timer ==225):
+                    dude.shoot(bg,man,man.x,man.y,screen,badguys)
+                    print('double tap')
+                if dude.shot_flag !=0 and man.alive ==0:
+                    dude.chase(man,bg.walls2)
+                    print('chase')
+                    shot_flag =0
+                      
 
     #LEVEL 2
     elif level == 2:
@@ -258,8 +263,11 @@ while running:
             if dude.shot_flag != 0 and man.alive ==0 and (dude.double_tap_timer ==45 or dude.double_tap_timer == 90 or dude.double_tap_timer ==135 or dude.double_tap_timer ==180 or dude.double_tap_timer ==225):
                 dude.shoot(bg2,man,man.x,man.y,screen,badguys2)
                 print('double tap')
-            if dude.shot_flag ==1:
-                print(dude.double_tap_timer)
+            if dude.shot_flag !=0 and man.alive ==0:
+                dude.chase_x(man,bg2.walls_x,bg2.walls_y)
+    
+
+        
 
         #bypass back to level 1
         if keys[pygame.K_i]:
@@ -301,10 +309,16 @@ while running:
         screen.blit(text_surface,text_rect)
         screen.blit(text_surface_reload,text_rect_reload)
         # Check for bullet/wall collisons
-        for wall in bg.walls:
-            if pygame.Rect.colliderect(shot.rect, wall):
-                flag_1 = False
-                break
+        if level ==1:
+            for wall in bg.walls:
+                if pygame.Rect.colliderect(shot.rect, wall):
+                    flag_1 = False
+                    break
+        if level ==2:
+            for wall in bg2.walls:
+                if pygame.Rect.colliderect(shot.rect, wall):
+                    flag_1 = False
+                    break
         # Check to see if bullet hit a bad guy
         if level == 1:
             for dude in badguys:

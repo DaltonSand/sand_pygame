@@ -31,6 +31,10 @@ class Background_2():
         wallx.fill((60, 30, 10))
         wall_corner.fill((60,30,10))
         self.walls = []
+        self.walls_x = []
+        self.walls_y = []
+
+
         # Loop over X and Y to cover entire screen
         for x in range(0,self.WIDTH,self.TILE_SIZE):
             for y in range(0,self.HEIGHT, int(self.TILE_SIZE)):
@@ -62,32 +66,46 @@ class Background_2():
                 if (x>(2*self.TILE_SIZE) and (x!=9*self.TILE_SIZE)) and x<(18*self.TILE_SIZE) and (x!=10*self.TILE_SIZE) and (x!=7*self.TILE_SIZE) and (x!=14*self.TILE_SIZE) and (y==self.HEIGHT-(4*self.TILE_SIZE)):
                     self.bg.blit(wallx,(x,y))
                     self.walls.append(pygame.Rect(x, y, self.TILE_SIZE, 15))
+                    self.walls_x.append(pygame.Rect(x, y, self.TILE_SIZE, 15))
+
 
                 if (x>(10*self.TILE_SIZE) and x<(14*self.TILE_SIZE)) and(y==self.HEIGHT-(8*self.TILE_SIZE)):
                     self.bg.blit(wallx,(x,y))
                     self.walls.append(pygame.Rect(x, y, self.TILE_SIZE, 15))
+                    self.walls_x.append(pygame.Rect(x, y, self.TILE_SIZE, 15))
+
 
                 if (x>(2*self.TILE_SIZE) and x<(18*self.TILE_SIZE))and (x!=7*self.TILE_SIZE)and(x!=10*self.TILE_SIZE) and (x!=9*self.TILE_SIZE)and (x!=16*self.TILE_SIZE)and(y==self.HEIGHT-(6*self.TILE_SIZE)):
                     self.bg.blit(wallx,(x,y))
                     self.walls.append(pygame.Rect(x, y, self.TILE_SIZE, 15))
+                    self.walls_x.append(pygame.Rect(x, y, self.TILE_SIZE, 15))
+
 
                     
                 # Interior Y walls
                 if (x==(9*self.TILE_SIZE)) and (y!=5*self.TILE_SIZE) and (y!=9*self.TILE_SIZE)and (y!=3*self.TILE_SIZE)and(y!=6*self.TILE_SIZE) and (y>(.5*self.TILE_SIZE) and y<(self.HEIGHT-self.TILE_SIZE)):
                     self.bg.blit(wally,(x,y))
                     self.walls.append(pygame.Rect(x, y, 15, self.TILE_SIZE))
+                    self.walls_y.append(pygame.Rect(x, y, 15, self.TILE_SIZE))
+
 
                 if (x==(6*self.TILE_SIZE)) and (y>(.5*self.TILE_SIZE) and y<(self.HEIGHT-7*self.TILE_SIZE)):
                     self.bg.blit(wally,(x,y))
                     self.walls.append(pygame.Rect(x, y, 15, self.TILE_SIZE))
+                    self.walls_y.append(pygame.Rect(x, y, 15, self.TILE_SIZE))
+
 
                 if (x==(11*self.TILE_SIZE)) and (y>(2*self.TILE_SIZE) and y<(self.HEIGHT-self.TILE_SIZE)) and (y!=5*self.TILE_SIZE)and (y!=6*self.TILE_SIZE) and (y!=9*self.TILE_SIZE):
                     self.bg.blit(wally,(x,y))
                     self.walls.append(pygame.Rect(x, y, 15, self.TILE_SIZE))
+                    self.walls_y.append(pygame.Rect(x, y, 15, self.TILE_SIZE))
+
 
                 if (x==(14*self.TILE_SIZE)) and (y>(.5*self.TILE_SIZE) and y<(self.HEIGHT-8*self.TILE_SIZE)):
                     self.bg.blit(wally,(x,y))
                     self.walls.append(pygame.Rect(x, y, 15, self.TILE_SIZE))
+                    self.walls_y.append(pygame.Rect(x, y, 15, self.TILE_SIZE))
+
 
         #corners
         self.bg.blit(wall_corner,(9*self.TILE_SIZE,5*self.TILE_SIZE))

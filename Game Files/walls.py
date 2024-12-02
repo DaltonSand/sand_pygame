@@ -93,11 +93,14 @@ class Background():
     # Wall collision rectangles
     def create_wall_collisions(self):
         self.walls = []
+        self.walls_y =[]
+        self.walls_x =[]
         for x in range(0,self.WIDTH,self.TILE_SIZE):
             for y in range(0,self.HEIGHT, self.TILE_SIZE):
                 # Exterior X walls
                 if (x>(2*self.TILE_SIZE) and x<(self.WIDTH-self.TILE_SIZE)) and (y==self.TILE_SIZE):
                     self.walls.append(pygame.Rect(x, y, self.TILE_SIZE, 15))
+                    
                 elif (x>(2*self.TILE_SIZE) and x<(self.WIDTH-self.TILE_SIZE)) and (y==self.HEIGHT-self.TILE_SIZE):
                     self.walls.append(pygame.Rect(x, y, self.TILE_SIZE, 15))
                     
@@ -110,22 +113,30 @@ class Background():
                 # Interior X self.walls
                 if (x>(2*self.TILE_SIZE) and x<(9*self.TILE_SIZE)) and (x!=7*self.TILE_SIZE) and (y==self.HEIGHT-(4*self.TILE_SIZE)):
                     self.walls.append(pygame.Rect(x, y, self.TILE_SIZE, 15))
+                    self.walls_x.append(pygame.Rect(x, y, self.TILE_SIZE, 15))
                 if (x>(2*self.TILE_SIZE) and x<(8*self.TILE_SIZE)) and (x!=3*self.TILE_SIZE)and(y==self.HEIGHT-(7*self.TILE_SIZE)):
                     self.walls.append(pygame.Rect(x, y, self.TILE_SIZE, 15))
+                    self.walls_x.append(pygame.Rect(x, y, self.TILE_SIZE, 15))
                 if (x>(10*self.TILE_SIZE) and x<(15*self.TILE_SIZE)) and(y==self.HEIGHT-(8*self.TILE_SIZE)):
                     self.walls.append(pygame.Rect(x, y, self.TILE_SIZE, 15))
+                    self.walls_x.append(pygame.Rect(x, y, self.TILE_SIZE, 15))
                 if (x>(10*self.TILE_SIZE) and x<(18*self.TILE_SIZE)) and(y==self.HEIGHT-(5*self.TILE_SIZE)):
                     self.walls.append(pygame.Rect(x, y, self.TILE_SIZE, 15))
+                    self.walls_x.append(pygame.Rect(x, y, self.TILE_SIZE, 15))
                     
                 # Interior Y self.walls
                 if (x==(9*self.TILE_SIZE)) and (y!=5*self.TILE_SIZE) and (y!=9*self.TILE_SIZE) and (y>(.5*self.TILE_SIZE) and y<(self.HEIGHT-self.TILE_SIZE)):
                     self.walls.append(pygame.Rect(x, y, 15, self.TILE_SIZE))
+                    self.walls_y.append(pygame.Rect(x, y, 15, self.TILE_SIZE))
                 if (x==(6*self.TILE_SIZE)) and (y>(.5*self.TILE_SIZE) and y<(self.HEIGHT-7*self.TILE_SIZE)):
                     self.walls.append(pygame.Rect(x, y, 15, self.TILE_SIZE))
+                    self.walls_y.append(pygame.Rect(x, y, 15, self.TILE_SIZE))
                 if (x==(11*self.TILE_SIZE)) and (y>(.5*self.TILE_SIZE) and y<(self.HEIGHT-self.TILE_SIZE)) and (y!= 7*self.TILE_SIZE) and (y!= 3*self.TILE_SIZE) and (y!= 4*self.TILE_SIZE):
                     self.walls.append(pygame.Rect(x, y, 15, self.TILE_SIZE))
+                    self.walls_y.append(pygame.Rect(x, y, 15, self.TILE_SIZE))
                 if (x==(15*self.TILE_SIZE)) and (y>(2*self.TILE_SIZE) and y<(self.HEIGHT-6*self.TILE_SIZE)):
                     self.walls.append(pygame.Rect(x, y, 15, self.TILE_SIZE))
+                    self.walls_y.append(pygame.Rect(x, y, 15, self.TILE_SIZE))
 
                 #Boxes
                 self.walls.append(pygame.Rect(300,463,bigger_box.get_width(),bigger_box.get_width()))

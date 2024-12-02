@@ -30,7 +30,10 @@ class BadGuy():
             self.image = pygame.image.load('PNG/Robot 1/robot1_gun.png')
         self.w = self.image.get_width()
         self.h = self.image.get_height()
-        self.rect = pygame.Rect(self.x,self.y,(self.w),(self.h))
+        self.rect = pygame.Rect(self.x,self.y,(self.h),(self.h))
+        self.rect.center = (self.x,self.y)
+        self.rect_see= pygame.Surface((self.h,self.h))
+        self.rect_see.fill((225,225,225))
 
     def rove(self, max_x,max_y):
         #set a time variable to control movement
@@ -84,11 +87,11 @@ class BadGuy():
                         self.vision_y = (self.rect.centery-175)
                 else:
                     self.time = 0
-                self.rect = pygame.Rect(self.x,self.y,(self.w),(self.h)) 
+                self.rect = pygame.Rect(self.x,self.y,(self.h),(self.h)) 
             else:
-                self.rect = pygame.Rect(-50,-50,(self.w),(self.h))
+                self.rect = pygame.Rect(-50,-50,(self.h),(self.h))
         else:
-            self.rect = pygame.Rect(self.x,self.y,(self.w),(self.h))
+            self.rect = pygame.Rect(self.x,self.y,(self.h),(self.h))
 
 
         if self.level == 1:
@@ -161,6 +164,39 @@ class BadGuy():
         self.vision = pygame.Surface((175,175))
         self.vision.fill((0,0,0))
         self.vision_rect = pygame.Rect(self.vision_x,self.vision_y,(175),(175))
+
+    def chase_x(self,man,walls_x,walls_y):
+        self.speed = 1
+        # Save current position in case of collision
+        pre_x = self.x
+        pre_y = self.y
+        
+        # Move toward the target
+        if self.x < man.x:
+            self.x += self.speed
+        elif self.x > man.x:
+            self.x -= self.speed
+        if self.y < man.y:
+            self.y += self.speed
+        elif self.y > man.y:
+            self.y -= self.speed
+        # Check collision with walls
+        self.rect.center = (self.x+15, self.y+15)
+        for wall in walls_x:
+            if self.rect.colliderect(wall):
+                # Undo movement if collision occurs
+                self.y = pre_y
+                print('wall')
+                break
+        for wall in walls_y:
+            if self.rect.colliderect(wall):
+            # Undo movement if collision occurs
+                self.x = pre_x
+                print('wally')
+                break
+            
+
+
               
     
     def die(self,deadmen):
@@ -177,30 +213,33 @@ class BadGuy():
         man_y_relative = man_y-self.y
         self.angle = degrees(atan2(-man_y_relative,man_x_relative))
         flag = 1
-        gun.shoot(self.x+15,self.y+15,self.angle,screen)
-        while flag ==1 :
-            bg.draw(screen)
-            man.draw(screen)
-            for dude in badguys:
-                dude.draw(screen)
-            gun.update(screen)
-            for wall in bg.walls:
-                if pygame.Rect.colliderect(gun.rect, wall):
+        if self.dead ==0:
+            gun.shoot(self.x+15,self.y+15,self.angle,screen)
+            while flag ==1 :
+                bg.draw(screen)
+                man.draw(screen)
+                for dude in badguys:
+                    dude.draw(screen)
+                gun.update(screen)
+                for wall in bg.walls:
+                    if pygame.Rect.colliderect(gun.rect, wall):
+                        flag = False
+                        break
+                if pygame.Rect.colliderect(gun.rect,man.rect):
+                    man.die()
                     flag = False
                     break
-            if pygame.Rect.colliderect(gun.rect,man.rect):
-                man.die()
-                flag = False
-                break
 
+                pygame.display.flip()
+                clock.tick(400)
             pygame.display.flip()
             clock.tick(400)
-        pygame.display.flip()
-        clock.tick(400)
             
     def draw(self,screen):
         if self.shot_flag ==1:
             self.double_tap_timer += 1
         new_bad_guy = pygame.transform.rotozoom(self.image,self.angle,0.8)
         #screen.blit(self.vision,(self.vision_x,self.vision_y))
+        
         screen.blit(new_bad_guy, (self.x,self.y))
+        #screen.blit(self.rect_see,(self.x,self.y))
