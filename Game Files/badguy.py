@@ -28,6 +28,8 @@ class BadGuy():
             self.image = pygame.image.load('PNG/Soldier 1/soldier1_machine.png')
         elif self.level == 2:
             self.image = pygame.image.load('PNG/Robot 1/robot1_gun.png')
+        elif self.level == 3:
+            self.image = pygame.image.load('PNG/Man Old/manOld_machine.png')
         self.w = self.image.get_width()
         self.h = self.image.get_height()
         self.rect = pygame.Rect(self.x,self.y,(self.h),(self.h))
@@ -167,38 +169,33 @@ class BadGuy():
 
     def chase_x(self,man,walls_x,walls_y):
         self.speed = 1
-        # Save current position in case of collision
+        #Save current position in case of collision
         pre_x = self.x
         pre_y = self.y
-        
-        # Move toward the target
-        if self.x < man.x:
-            self.x += self.speed
-        elif self.x > man.x:
-            self.x -= self.speed
-        if self.y < man.y:
-            self.y += self.speed
-        elif self.y > man.y:
-            self.y -= self.speed
-        # Check collision with walls
-        self.rect.center = (self.x+15, self.y+15)
-        for wall in walls_x:
-            if self.rect.colliderect(wall):
-                # Undo movement if collision occurs
-                self.y = pre_y
-                print('wall')
-                break
-        for wall in walls_y:
-            if self.rect.colliderect(wall):
-            # Undo movement if collision occurs
-                self.x = pre_x
-                print('wally')
-                break
+        if self.dead ==0:
+            #Move toward the man
+            if self.x < man.x:
+                self.x += self.speed
+            elif self.x > man.x:
+                self.x -= self.speed
+            if self.y < man.y:
+                self.y += self.speed
+            elif self.y > man.y:
+                self.y -= self.speed
+            # Check collision with walls
+            self.rect.center = (self.x+15, self.y+15)
+            for wall in walls_x:
+                if self.rect.colliderect(wall):
+                    # Undo movement if collision occurs
+                    self.y = pre_y
+                    break
+            for wall in walls_y:
+                if self.rect.colliderect(wall):
+                    # Undo movement if collision occurs
+                    self.x = pre_x
+                    break
             
 
-
-              
-    
     def die(self,deadmen):
         self.image = pygame.image.load('PNG/Man Old/manOld_stand.png')
         self.rect = pygame.Rect(-50,-50,(self.w),(self.h))

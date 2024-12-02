@@ -27,7 +27,9 @@ fail = 0
 show_title = 1
 title_time = 0
 bg_alpha = 120
+bg_alpha2 =120
 title_alpha = 400
+title_alpha2 =400
 color = (0,0,0)
 level= 1
 badguys = []
@@ -35,6 +37,7 @@ badguys2 = []
 reload_time = 90
 level_2time = 0
 level_3time =0
+title_time_2 = 0
 
 # Tiles
 grass = pygame.image.load('PNG/Tiles/tile_01.png')
@@ -45,8 +48,8 @@ wood_floor = pygame.image.load('PNG/Tiles/tile_43.png')
 bullet = pygame.image.load('PNG/bullet.png')
 
 ##################CHANGEABLES#####################
-game_time = 20.1
-shot_max =12
+game_time = 80
+shot_max =8
 ##################################################
 
 #font
@@ -95,6 +98,8 @@ badguy_13= BadGuy(1050,350,2)
 badguys2.append(badguy_13)
 badguy_14= BadGuy(250,350,2)
 badguys2.append(badguy_14)
+#Osama 
+badguy_15= BadGuy(250,350,3)
 
 
 #MUSIC
@@ -102,7 +107,7 @@ bg_music = pygame.mixer.Sound('VTEMO - Drifting (freetouse.com).mp3')
 bg_music.set_volume(0.5)
 bg_music.play(-1)
 
-# Run game loop
+##############     Run game loop    ###################
 while running:
     # Run until 'X' is pressed
     for event in pygame.event.get():
@@ -163,7 +168,7 @@ while running:
         reload_num =0
         flag_1 = True
 
-    #LEVEL 1
+    ############          LEVEL 1           ############################
     if level == 1:
         #draw background
         bg.draw(screen)
@@ -181,11 +186,18 @@ while running:
         title_rect = title_surface.get_rect(center=(WIDTH//2,HEIGHT//2))
         screen.blit(title_surface,title_rect)
         
-        for wall in bg.walls:
+        #Make Collisions (smoother glide)
+        for wall in bg.walls_y:
             if pygame.Rect.colliderect(man.rect, wall):
                 man.x = pre_x
+        for wall in bg.walls_x:
+            if pygame.Rect.colliderect(man.rect, wall):
                 man.y = pre_y
-
+        for wall in bg.boxes:
+            if pygame.Rect.colliderect(man.rect, wall):
+                man.y = pre_y
+                man.x = pre_x           
+                
         # Badguys move around/blit 
         badguy_1.rove(550,400)
         badguy_2.rove(550,544)
@@ -204,28 +216,25 @@ while running:
         if keys[pygame.K_y]:
             level = 3
 
-        # Check if Man Spotted (kill him)
+        # Check if Man Spotted (kill him/chase him)
         for dude in badguys:
-            if dude.dead != 0:
-                if pygame.Rect.colliderect(man.rect,dude.vision_rect):
-                    print('\n\n\n SPOTED \n\n\n')
-            
-                    dude.shot_flag = 1
-                    dude.shoot(bg,man,man.x,man.y,screen,badguys)
-                if dude.shot_flag != 0 and man.alive ==0 and (dude.double_tap_timer ==45 or dude.double_tap_timer == 90 or dude.double_tap_timer ==135 or dude.double_tap_timer ==180 or dude.double_tap_timer ==225):
-                    dude.shoot(bg,man,man.x,man.y,screen,badguys)
-                    print('double tap')
-                if dude.shot_flag !=0 and man.alive ==0:
-                    dude.chase(man,bg.walls2)
-                    print('chase')
-                    shot_flag =0
-                      
+            if pygame.Rect.colliderect(man.rect,dude.vision_rect):
+                print('\n\n\n SPOTED \n\n\n')
+                dude.shot_flag = 1
+                dude.shoot(bg,man,man.x,man.y,screen,badguys)
+            if dude.shot_flag != 0 and man.alive ==0 and (dude.double_tap_timer ==45 or dude.double_tap_timer == 90 or dude.double_tap_timer ==135 or dude.double_tap_timer ==180 or dude.double_tap_timer ==225):
+                dude.shoot(bg,man,man.x,man.y,screen,badguys)
+                print('double tap')
+            if dude.shot_flag !=0 and man.alive ==0:
+                dude.chase_x(man,bg.walls_x,bg.walls_y) 
 
-    #LEVEL 2
+    ##############       LEVEL 2       #################
     elif level == 2:
         #start new walls for collisions
+        title_time_2 += 1
         level_2time +=0.01
         walls = []
+        shot_max =shot_max+7
         while level_2time == 0.01:
             man.x = 840
             man.y = 120
@@ -235,6 +244,21 @@ while running:
         #draw everything
         bg2 = Background_2 (WIDTH,HEIGHT,TILE_SIZE)
         bg2.draw(screen)
+
+        # Draw Title/alpha 
+        if title_time_2 < 120:
+            title_surface = font.render("Killing Osama bin Laden: Level 2", True, (255,255,255))
+            bg_alpha2 += 1
+            title_alpha2 -= 4
+            print('alpha shit')
+        else:
+            title_surface = font.render("", True, (0,0,0))
+            title_alpha = 0
+            bg_alpha2 = 254
+        bg2.bg.set_alpha(bg_alpha2)
+        title_surface.set_alpha(title_alpha2)
+        title_rect = title_surface.get_rect(center=(WIDTH//2,HEIGHT//2))
+        screen.blit(title_surface,title_rect)
 
         for wall in bg2.walls:
             if pygame.Rect.colliderect(man.rect, wall):
@@ -266,15 +290,16 @@ while running:
             if dude.shot_flag !=0 and man.alive ==0:
                 dude.chase_x(man,bg2.walls_x,bg2.walls_y)
     
-
-        
-
         #bypass back to level 1
         if keys[pygame.K_i]:
             level = 1
-    #LEVEL 3
+        #bypass to level 3
+        if keys[pygame.K_y]:
+            level = 3
+    #############        LEVEL 3         ######################
     elif level == 3:
         #start new walls for collisions
+        shot_max =1
         level_3time +=0.01
         walls = []
         while level_3time == 0.01:
@@ -291,6 +316,8 @@ while running:
             if pygame.Rect.colliderect(man.rect, wall):
                 man.x = pre_x
                 man.y = pre_y
+
+        badguy_15.draw(screen)
         #bypass level 3 -> level 1
         if keys[pygame.K_i]:
             level = 1

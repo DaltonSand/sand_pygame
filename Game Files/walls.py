@@ -18,6 +18,10 @@ class Background():
     def draw(self, screen):
         wallx= pygame.Surface((self.TILE_SIZE,15))
         wally= pygame.Surface((15,self.TILE_SIZE))
+        y_corner = pygame.Surface((1,15))
+        x_corner = pygame.Surface((15,1))
+        x_corner.fill((101, 67, 33))
+        y_corner.fill((101, 67, 33))
         stair= pygame.Surface((25,113))
         stair_b = pygame.Surface((5,113))
         stair_b.fill((0,0,0))
@@ -66,8 +70,30 @@ class Background():
                     self.bg.blit(wally,(x,y))
                 if (x==(15*self.TILE_SIZE)) and (y>(2*self.TILE_SIZE) and y<(self.HEIGHT-6*self.TILE_SIZE)):
                     self.bg.blit(wally,(x,y))
-        #stairs
+        #coners_y
+        self.bg.blit(y_corner,(11*self.TILE_SIZE,3*self.TILE_SIZE))
+        self.bg.blit(y_corner,(4*self.TILE_SIZE,4*self.TILE_SIZE))
+        self.bg.blit(y_corner,(8*self.TILE_SIZE,4*self.TILE_SIZE))
+        self.bg.blit(y_corner,(7*self.TILE_SIZE,7*self.TILE_SIZE))
+        self.bg.blit(y_corner,(8*self.TILE_SIZE,7*self.TILE_SIZE))
         
+        #coners_x
+        self.bg.blit(x_corner,(3*self.TILE_SIZE,8*self.TILE_SIZE-1))
+        self.bg.blit(x_corner,(3*self.TILE_SIZE,9*self.TILE_SIZE))
+        self.bg.blit(x_corner,(9*self.TILE_SIZE,9*self.TILE_SIZE-1))
+        self.bg.blit(x_corner,(9*self.TILE_SIZE,5*self.TILE_SIZE-1))
+        self.bg.blit(x_corner,(9*self.TILE_SIZE,6*self.TILE_SIZE))
+        self.bg.blit(x_corner,(11*self.TILE_SIZE,5*self.TILE_SIZE-1))
+        self.bg.blit(x_corner,(11*self.TILE_SIZE,7*self.TILE_SIZE-1))
+        self.bg.blit(x_corner,(11*self.TILE_SIZE,8*self.TILE_SIZE-1))
+        self.bg.blit(x_corner,(15*self.TILE_SIZE,3*self.TILE_SIZE))
+        self.bg.blit(x_corner,(15*self.TILE_SIZE,5*self.TILE_SIZE-1))
+
+
+
+
+        #575    3578
+        #stairs
         self.bg.blit(stair,(719,79))
         self.bg.blit(stair_b,(744,79))
         self.bg.blit(stair,(749,79))
@@ -95,20 +121,28 @@ class Background():
         self.walls = []
         self.walls_y =[]
         self.walls_x =[]
+        self.boxes = []
+        self.walls_outside = []
         for x in range(0,self.WIDTH,self.TILE_SIZE):
             for y in range(0,self.HEIGHT, self.TILE_SIZE):
                 # Exterior X walls
                 if (x>(2*self.TILE_SIZE) and x<(self.WIDTH-self.TILE_SIZE)) and (y==self.TILE_SIZE):
                     self.walls.append(pygame.Rect(x, y, self.TILE_SIZE, 15))
+                    self.walls_x.append(pygame.Rect(x, y, self.TILE_SIZE, 15))
                     
                 elif (x>(2*self.TILE_SIZE) and x<(self.WIDTH-self.TILE_SIZE)) and (y==self.HEIGHT-self.TILE_SIZE):
                     self.walls.append(pygame.Rect(x, y, self.TILE_SIZE, 15))
+                    self.walls_x.append(pygame.Rect(x, y, self.TILE_SIZE, 15))
+
                     
                 # Exterior Y walls
                 if (x==(3*self.TILE_SIZE)) and (y>(.5*self.TILE_SIZE) and y<(self.HEIGHT-self.TILE_SIZE)) and (y!=8*self.TILE_SIZE):
                     self.walls.append(pygame.Rect(x, y, 15, self.TILE_SIZE))
+                    self.walls_y.append(pygame.Rect(x, y, 15, self.TILE_SIZE))
                 elif (x==(self.WIDTH-self.TILE_SIZE)) and (y>(.5*self.TILE_SIZE) and y<(self.HEIGHT-self.TILE_SIZE)):
                     self.walls.append(pygame.Rect(x-15, y, 15, self.TILE_SIZE))
+                    self.walls_y.append(pygame.Rect(x-15, y, 15, self.TILE_SIZE))
+                    
                     
                 # Interior X self.walls
                 if (x>(2*self.TILE_SIZE) and x<(9*self.TILE_SIZE)) and (x!=7*self.TILE_SIZE) and (y==self.HEIGHT-(4*self.TILE_SIZE)):
@@ -138,8 +172,35 @@ class Background():
                     self.walls.append(pygame.Rect(x, y, 15, self.TILE_SIZE))
                     self.walls_y.append(pygame.Rect(x, y, 15, self.TILE_SIZE))
 
+                #coners_y
+                self.walls_y.append(pygame.Rect(11*self.TILE_SIZE,3*self.TILE_SIZE,1,14))
+                self.walls_y.append(pygame.Rect(4*self.TILE_SIZE,4*self.TILE_SIZE,1,14))
+                self.walls_y.append(pygame.Rect(8*self.TILE_SIZE,4*self.TILE_SIZE,1,14))
+                self.walls_y.append(pygame.Rect(7*self.TILE_SIZE,7*self.TILE_SIZE,1,14))
+                self.walls_y.append(pygame.Rect(8*self.TILE_SIZE,7*self.TILE_SIZE,1,14))
+                #coners_x
+                self.walls_x.append(pygame.Rect(3*self.TILE_SIZE,8*self.TILE_SIZE-1,15,1))
+                self.walls_x.append(pygame.Rect(3*self.TILE_SIZE,9*self.TILE_SIZE,15,1))
+                self.walls_x.append(pygame.Rect(9*self.TILE_SIZE,9*self.TILE_SIZE-1,15,1))
+                self.walls_x.append(pygame.Rect(9*self.TILE_SIZE,5*self.TILE_SIZE-1,15,1))
+                self.walls_x.append(pygame.Rect(9*self.TILE_SIZE,6*self.TILE_SIZE,15,1))
+                self.walls_x.append(pygame.Rect(11*self.TILE_SIZE,5*self.TILE_SIZE-1,15,1))
+                self.walls_x.append(pygame.Rect(11*self.TILE_SIZE,7*self.TILE_SIZE-1,15,1))
+                self.walls_x.append(pygame.Rect(11*self.TILE_SIZE,8*self.TILE_SIZE-1,15,1))
+                self.walls_x.append(pygame.Rect(15*self.TILE_SIZE,3*self.TILE_SIZE,15,1))
+                self.walls_x.append(pygame.Rect(15*self.TILE_SIZE,5*self.TILE_SIZE-1,15,1))
+
+
                 #Boxes
                 self.walls.append(pygame.Rect(300,463,bigger_box.get_width(),bigger_box.get_width()))
+                self.boxes.append(pygame.Rect(300,463,bigger_box.get_width(),bigger_box.get_width()))
+
                 self.walls.append(pygame.Rect(400,584,bigger_box.get_width(),bigger_box.get_width()))
+                self.boxes.append(pygame.Rect(400,584,bigger_box.get_width(),bigger_box.get_width()))
+
                 self.walls.append(pygame.Rect(300,325,bigger_box.get_width(),bigger_box.get_width()))
+                self.boxes.append(pygame.Rect(300,325,bigger_box.get_width(),bigger_box.get_width()))
+
                 self.walls.append(pygame.Rect(800,500,bigger_box.get_width(),bigger_box.get_width()))
+                self.boxes.append(pygame.Rect(800,500,bigger_box.get_width(),bigger_box.get_width()))
+
