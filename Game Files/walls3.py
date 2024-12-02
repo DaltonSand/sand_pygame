@@ -31,6 +31,8 @@ class Background_3():
         wallx.fill((60, 30, 10))
         wall_corner.fill((60,30,10))
         self.walls = []
+        self.walls_x = []
+        self.walls_y = []
         # Loop over X and Y to cover entire screen
         for x in range(0,self.WIDTH,self.TILE_SIZE):
             for y in range(0,self.HEIGHT, int(self.TILE_SIZE)):
@@ -46,22 +48,28 @@ class Background_3():
                 if (x>(2*self.TILE_SIZE) and x<(self.WIDTH-self.TILE_SIZE)) and (y==self.TILE_SIZE):
                     self.bg.blit(wallx,(x,y))
                     self.walls.append(pygame.Rect(x, y, self.TILE_SIZE, 15))
+                    self.walls_x.append(pygame.Rect(x, y, self.TILE_SIZE, 15))
                 elif (x>(2*self.TILE_SIZE) and x<(self.WIDTH-self.TILE_SIZE)) and (y==self.HEIGHT-self.TILE_SIZE):
                     self.bg.blit(wallx,(x,y))
                     self.walls.append(pygame.Rect(x, y, self.TILE_SIZE, 15))
+                    self.walls_x.append(pygame.Rect(x, y, self.TILE_SIZE, 15))
                     
                 # Exterior Y walls
                 if (x==(3*self.TILE_SIZE)) and (y>(.5*self.TILE_SIZE) and y<(self.HEIGHT-self.TILE_SIZE)):
                     self.bg.blit(wally,(x,y))
                     self.walls.append(pygame.Rect(x, y, 15, self.TILE_SIZE))
+                    self.walls_y.append(pygame.Rect(x, y, 15, self.TILE_SIZE))
                 elif (x==(self.WIDTH-self.TILE_SIZE)) and (y>(.5*self.TILE_SIZE) and y<(self.HEIGHT-1.5*self.TILE_SIZE)):
                     self.bg.blit(wally,((x-15),y))
                     self.walls.append(pygame.Rect(x, y, 15, self.TILE_SIZE))
+                    self.walls_y.append(pygame.Rect(x, y, 15, self.TILE_SIZE))
 
                 # Interior X
                 if (x>(2*self.TILE_SIZE) and x<(18*self.TILE_SIZE) and (x!=7*self.TILE_SIZE) and (x!=14*self.TILE_SIZE) and (y==self.HEIGHT-(4*self.TILE_SIZE))):
                     self.bg.blit(wallx,(x,y))
                     self.walls.append(pygame.Rect(x, y, self.TILE_SIZE, 15))
+                    self.walls_x.append(pygame.Rect(x, y, self.TILE_SIZE, 15))
+
 
         #stairs
         

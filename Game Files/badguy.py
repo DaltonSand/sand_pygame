@@ -36,6 +36,7 @@ class BadGuy():
         self.rect.center = (self.x,self.y)
         self.rect_see= pygame.Surface((self.h,self.h))
         self.rect_see.fill((225,225,225))
+        
 
     def rove(self, max_x,max_y):
         #set a time variable to control movement
@@ -44,6 +45,8 @@ class BadGuy():
             speed = 0.8
         if self.level ==2:
             speed = 1.4
+        if self.level ==3:
+            speed = 1.8
         self.max_x = max_x
         self.max_y = max_y
         self.vision_x = -100
@@ -59,6 +62,9 @@ class BadGuy():
                     if self.level ==2:
                         self.vision_x = (self.rect.centerx)
                         self.vision_y = (self.rect.centery-88)
+                    if self.level ==3:
+                        self.vision_x = (self.rect.centerx)
+                        self.vision_y = (self.rect.centery-300)
 
                 elif self.time < ((self.max_x-self.cx)+(self.max_y-self.cy)):
                     self.y += speed
@@ -69,6 +75,9 @@ class BadGuy():
                     if self.level ==2:
                         self.vision_x = (self.rect.centerx-88)
                         self.vision_y = (self.rect.centery)
+                    if self.level ==3:
+                        self.vision_x = (self.rect.centerx-300)
+                        self.vision_y = (self.rect.centery)
                 elif self.time < ((self.max_x-self.cx)+(self.max_y-self.cy))+ (self.max_x-self.cx):
                     self.x -= speed
                     self.angle = 180
@@ -78,6 +87,9 @@ class BadGuy():
                     if self.level ==2:
                         self.vision_x = (self.rect.centerx-175)
                         self.vision_y = (self.rect.centery-88)
+                    if self.level ==3:
+                        self.vision_x = (self.rect.centerx-600)
+                        self.vision_y = (self.rect.centery-300)
                 elif self.time < (((self.max_x-self.cx)+(self.max_y-self.cy))+ (self.max_x-self.cx))+(self.max_y-self.cy):
                     self.y -= speed
                     self.angle = 90
@@ -87,6 +99,9 @@ class BadGuy():
                     if self.level ==2:
                         self.vision_x = (self.rect.centerx-88)
                         self.vision_y = (self.rect.centery-175)
+                    if self.level ==3:
+                        self.vision_x = (self.rect.centerx-300)
+                        self.vision_y = (self.rect.centery-600)
                 else:
                     self.time = 0
                 self.rect = pygame.Rect(self.x,self.y,(self.h),(self.h)) 
@@ -104,6 +119,10 @@ class BadGuy():
             self.vision = pygame.Surface((175,175))
             self.vision.fill((0,0,0))
             self.vision_rect = pygame.Rect(self.vision_x,self.vision_y,(175),(175))
+        if self.level == 3:
+            self.vision = pygame.Surface((600,600))
+            self.vision.fill((0,0,0))
+            self.vision_rect = pygame.Rect(self.vision_x,self.vision_y,(600),(600))
 
     def rove_rev (self, min_x,max_y):
         #set a time variable to control movement
@@ -167,21 +186,34 @@ class BadGuy():
         self.vision.fill((0,0,0))
         self.vision_rect = pygame.Rect(self.vision_x,self.vision_y,(175),(175))
 
-    def chase_x(self,man,walls_x,walls_y):
+    def chase_x(self,man,walls_x,walls_y,scared=1):
         self.speed = 1
         #Save current position in case of collision
         pre_x = self.x
         pre_y = self.y
         if self.dead ==0:
-            #Move toward the man
-            if self.x < man.x:
-                self.x += self.speed
-            elif self.x > man.x:
-                self.x -= self.speed
-            if self.y < man.y:
-                self.y += self.speed
-            elif self.y > man.y:
-                self.y -= self.speed
+            if scared ==1:
+                #Move toward the man
+                if self.x < man.x:
+                    self.x += self.speed
+                elif self.x > man.x:
+                    self.x -= self.speed
+                if self.y < man.y:
+                    self.y += self.speed
+                elif self.y > man.y:
+                    self.y -= self.speed
+            if scared ==2:
+                self.roving =1
+                self.shot_flag =1
+                #Move away the man
+                if self.x < man.x:
+                    self.x -= self.speed
+                elif self.x > man.x:
+                    self.x += self.speed
+                if self.y < man.y:
+                    self.y -= self.speed
+                elif self.y > man.y:
+                    self.y += self.speed
             # Check collision with walls
             self.rect.center = (self.x+15, self.y+15)
             for wall in walls_x:
