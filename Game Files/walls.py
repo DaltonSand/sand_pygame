@@ -107,6 +107,7 @@ class Background():
         self.bg.blit(stair,(869,79))
 
         # Draw boxes
+
         self.bg.blit(bigger_box,(300,463))
         self.bg.blit(bigger_box,(400,584))
         self.bg.blit(bigger_box,(300,325))

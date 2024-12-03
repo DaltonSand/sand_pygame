@@ -203,8 +203,8 @@ class BadGuy():
                 elif self.y > man.y:
                     self.y -= self.speed
             if scared ==2:
-                self.roving =1
-                self.shot_flag =1
+                # self.roving =1
+                # self.shot_flag =1
                 #Move away the man
                 if self.x < man.x:
                     self.x -= self.speed
