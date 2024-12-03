@@ -8,7 +8,7 @@ from walls2 import Background_2
 from countdown import countdown
 from time import time
 from walls3 import Background_3
-from home import homescreen
+
 
 # pygame setup
 pygame.init()
@@ -46,6 +46,7 @@ title_time_3 = 0
 win = 0
 run = True
 username = ''
+record = 1
 
 # Tiles
 grass = pygame.image.load('PNG/Tiles/tile_01.png')
@@ -156,6 +157,13 @@ while running:
             color = (255, 215, 0)
             bg_alpha =120
             bg3.bg.set_alpha(bg_alpha)
+            score = game_time
+            print(score)
+            # Record score
+            while record:
+                with open("scores.txt", "a") as file:
+                    file.write(f"Username:{username} - {score}.\n")
+                record = 0
         elif man.x <300 and man.y>400 and len (deadmen)==14 and level ==2:
             text_surface = font.render("", True, (0,0,0))
             level = 3
@@ -513,7 +521,7 @@ while running:
         man.reload(screen)
 
     # Increase Time for text
-    if level != 0:
+    if level != 0 and win ==0:
         game_time -= 1/60
         # Increase Time fot title
         title_time += 1
