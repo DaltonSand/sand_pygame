@@ -18,35 +18,45 @@ screen = pygame.display.set_mode((WIDTH, HEIGHT))
 clock = pygame.time.Clock()
 running = True
 
-# variable set up
+# Game variables
 bullets = []
-shot_num = 0 
-reload_num = 100
-shot_max =12
 deadmen = []
-fail = 0
-show_title = 1
-title_time = 0
-bg_alpha = 120
-bg_alpha2 =120
-bg_alpha3 =120
-title_alpha = 400
-title_alpha2 =400
-title_alpha3 =400
-color = (0,0,0)
-level= 0
 badguys = []
 badguys2 = []
 badguys3 = []
-reload_time = 90
-level_2time = 0
-level_3time =0
+
+# Gameplay states
+shot_num = 0
+reload_num = 100
+shot_max = 12           # Number of bullets (level 1)
+fail = 0
+level = 0
+win = 0
+run = 1
+record = 1
+username = ''
+
+# Time management
+game_time = 30          # Time for level 1
+reload_time = 90        # Time for reload
+title_time = 0
 title_time_2 = 0
 title_time_3 = 0
-win = 0
-run = True
-username = ''
-record = 1
+level_2time = 0
+level_3time = 0
+
+# Fancy screen variables
+show_title = 1
+bg_alpha = 120
+bg_alpha2 = 120
+bg_alpha3 = 120
+title_alpha = 400
+title_alpha2 = 400
+title_alpha3 = 400
+
+# Misc
+color = (0, 0, 0)
+TILE_SIZE = None
 
 # Tiles
 grass = pygame.image.load('PNG/Tiles/tile_01.png')
@@ -58,17 +68,9 @@ bullet = pygame.image.load('PNG/bullet.png')
 small_camo = pygame.image.load('PNG/camo.PNG')
 camo = pygame.transform.scale(small_camo,(WIDTH,HEIGHT))
 
-
-
-##################CHANGEABLES#####################
-game_time = 20
-shot_max = 8
-##################################################
-
-#font
+# Font
 font = pygame.font.Font(None,42)
 font_v = pygame.font.Font(None,200)
-
 
 # THE MAN
 man = Man(75,350)
@@ -76,15 +78,15 @@ man = Man(75,350)
 # Sizes
 TILE_SIZE = grass.get_width()
 
-
+#MUSIC
+bg_music = pygame.mixer.Sound('VTEMO - Drifting (freetouse.com).mp3')
+bg_music.set_volume(0.5)
+bg_music.play(-1)
 
 # Create initial background and wall collisions
 bg = Background(WIDTH, HEIGHT,TILE_SIZE)
 bg2 = Background_2 (WIDTH,HEIGHT,TILE_SIZE)
 bg3 = Background_3 (WIDTH,HEIGHT,TILE_SIZE)
-
-bg.draw(screen)
-bg.create_wall_collisions()
 
 #badguys
 badguy_1 = BadGuy(375,290)
@@ -120,11 +122,8 @@ badguys2.append(badguy_14)
 badguy_15= BadGuy(683,150,3)
 badguys3.append(badguy_15)
 
-
-#MUSIC
-bg_music = pygame.mixer.Sound('VTEMO - Drifting (freetouse.com).mp3')
-bg_music.set_volume(0.5)
-bg_music.play(-1)
+# Create collisions
+bg.create_wall_collisions()
 
 ##############     Run game loop    ###################
 while running:
@@ -158,7 +157,6 @@ while running:
             bg_alpha =120
             bg3.bg.set_alpha(bg_alpha)
             score = game_time
-            print(score)
             # Record score
             while record:
                 with open("scores.txt", "a") as file:
@@ -199,6 +197,8 @@ while running:
             text_surface_reload = font.render("READY TO FIRE", True, (0,0,0))
         else:
             text_surface_reload = font.render("OUT OF BULLETS", True, (0,0,0))
+        if  text_surface_reload == font.render("OUT OF BULLETS", True, (0,0,0)) and win ==0:
+            fail =1 
     else:
         text_surface_reload = font.render("", True, (0,0,0))
     text_rect_reload = text_surface_reload.get_rect(center =(125,30))
@@ -297,11 +297,6 @@ while running:
         #bypass level 1 -> level 3
         if keys[pygame.K_y]:
             level = 3
-        if keys[pygame.K_r]:
-            print('txt')
-            with open("scores.txt", "a") as file:
-                file.write("Sand\t")
-                file.write('550')
         
 
         # Check if Man Spotted (kill him/chase him)
@@ -321,13 +316,13 @@ while running:
         #start new walls for collisions
         title_time_2 += 1
         level_2time +=0.01
-        shot_num = 0
         walls = []
-        shot_max = 10
         while level_2time == 0.01:
+            shot_max = 10
+            shot_num = 0
             man.x = 840
             man.y = 120
-            game_time = game_time+12
+            game_time = game_time+30
             man.angle = 180
             break
         #draw everything
@@ -388,14 +383,15 @@ while running:
     elif level == 3:
         #start new walls for collisions
         title_time_3 += 1
-        shot_max =1
+        
         level_3time +=0.01
-        shot_num = 0
         walls = []
         while level_3time == 0.01:
+            shot_max=1
+            shot_num = 0
             man.x = 250
             man.y = 550
-            game_time = game_time+12
+            game_time = game_time+5
             man.angle = 0
             break
         #draw everything
@@ -527,5 +523,5 @@ while running:
         title_time += 1
         
     pygame.display.flip()
-    clock.tick(60)
+    clock.tick(50)
 pygame.quit()

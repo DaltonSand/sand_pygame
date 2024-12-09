@@ -40,10 +40,15 @@ class Man():
 
     def reload(self,screen):
         self.reloading = True
+        # make sure man is still alive
         if self.alive == 0:
+            # create reloading image
             reload_man = pygame.image.load('PNG/Survivor 1/survivor1_reload.png')
+            # make the image the right size
             new_reload_man = pygame.transform.rotozoom(reload_man,self.angle,0.8)
+            # blit the new image
             screen.blit(new_reload_man,(self.x,self.y))
+        # if man not alive then blit dead man
         else:
             self.image = pygame.image.load('PNG/Survivor 1/survivor1_stand.png')
             new_dead_man = pygame.transform.rotozoom(self.image,self.angle,0.8)

@@ -8,6 +8,7 @@ class Gun():
         self.surface = pygame.Surface((10,10))
         self.surface.fill((0,0,0))
     def shoot(self,x,y,angle, screen):
+        # this method finds man and shoots
         self.x = x
         self.y = y
         self.angle = angle
@@ -23,6 +24,7 @@ class Gun():
 
 
 class Reload():
+    # this class builds the box for the reloading
     def __init__ (self, x,y, screen):
         self.x = x
         self.y = y
@@ -47,6 +49,7 @@ class Reload():
         self.screen.blit(self.left_line, (20,50))
 
 def reload(man,reload_num,shot_num,shot_max,screen,time):
+        # this function shows the reloading rect
     if shot_num <shot_max:
         reload_0 = Reload(20,30,screen)
         reload_0.box()
